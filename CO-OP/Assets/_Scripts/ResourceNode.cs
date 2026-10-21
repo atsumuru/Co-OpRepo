@@ -23,6 +23,13 @@ public class ResourceNode : NetworkBehaviour, IInteractable
 
     private NetworkVariable<int> m_health = new(3);
 
+    private ResourceSpawner m_resourceSpawner;
+
+    private void Awake()
+    {
+        m_resourceSpawner = FindAnyObjectByType<ResourceSpawner>();
+    }
+
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
@@ -55,6 +62,7 @@ public class ResourceNode : NetworkBehaviour, IInteractable
                     position.x += offset.x;
                     position.z += offset.y;
                     Debug.Log("Spawning");
+                    m_resourceSpawner.SpawnResource(m_producedObjectType, position);
                 }
             }
         }
