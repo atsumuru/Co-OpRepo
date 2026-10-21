@@ -15,7 +15,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField]
     private AnimationEvents m_animationEvents;
 
-    private bool m_isInteracting;
+    private bool m_isInteracting, m_isChopping;
 
     [SerializeField]
     private GameObject m_axeModel, m_pickAxeModel, m_woodModel, m_stoneModel;
@@ -26,11 +26,12 @@ public class PlayerController : NetworkBehaviour
     private void OnEnable()
     {
         m_playerInput.OnPickUpPressed += HandlePickUpPressed;
+        m_playerInput.OnInteractPressed += HandleActionPressed;
     }
 
     private void HandlePickUpPressed()
     {
-        if(m_isInteracting)
+        if(m_isInteracting || m_isChopping)
             return;
         if(m_interactionDetector.ClosestInteractable == null)
             return;
@@ -42,6 +43,22 @@ public class PlayerController : NetworkBehaviour
     private void OnDisable()
     {
         m_playerInput.OnPickUpPressed -= HandlePickUpPressed;
+        m_playerInput.OnInteractPressed -= HandleActionPressed;
+    }
+
+    private void HandleActionPressed()
+    {
+        if(IsOwner == false)
+        {
+            return;
+        }
+        if(m_isChopping || m_isInteracting)
+            return;
+        if(m_heldObjectType.Value is ObjectType.Axe or ObjectType.PickAxe)
+        {
+            m_isChopping = true;
+            m_animator.SetTrigger("Chop");
+        }
     }
 
     public override void OnNetworkSpawn()
@@ -54,7 +71,31 @@ public class PlayerController : NetworkBehaviour
         {
             m_animationEvents.OnInteract += HandleInteractAction;
             m_animationEvents.OnAnimationDone += HandleAnimationDone;
+            m_animationEvents.OnChop += HandleChopAction;
         }
+    }
+
+    private void HandleChopAction()
+    {
+        if(m_heldObjectType.Value is ObjectType.Axe or ObjectType.PickAxe)
+        {
+            if(m_interactionDetector.ClosestInteractable is ResourceNode)
+            {
+                RequestResourceNodeInteractionServerRpc(m_interactionDetector.ClosestInteractable.NetworkObject.NetworkObjectId);
+            }
+        }
+    }
+
+    [Rpc(SendTo.Server)]
+    private void RequestResourceNodeInteractionServerRpc(ulong networkObjectId)
+    {
+        if(!NetworkManager.SpawnManager.SpawnedObjects.TryGetValue(networkObjectId, out NetworkObject target))
+            return;
+        
+        if(!target.TryGetComponent(out ResourceNode node))
+            return;
+
+        node.Harvest(m_heldObjectType.Value);
     }
 
     private void HandleItemOnJoin()
@@ -81,6 +122,7 @@ public class PlayerController : NetworkBehaviour
             RequestDropServerRpc();
             m_animationEvents.OnInteract -= HandleInteractAction;
             m_animationEvents.OnAnimationDone -= HandleAnimationDone;
+            m_animationEvents.OnChop -= HandleChopAction;
         }
         base.OnNetworkDespawn();
     }
@@ -94,6 +136,7 @@ public class PlayerController : NetworkBehaviour
     private void HandleAnimationDone()
     {
         m_isInteracting = false;
+        m_isChopping = false;
     }
 
     private void HandleInteractAction()
@@ -164,6 +207,10 @@ public class PlayerController : NetworkBehaviour
             return;
         }
         Vector2 movementInput = m_playerInput.MovementInput;
+        if(m_isChopping || m_isInteracting)
+        {
+            movementInput = Vector2.zero;
+        }
         m_agentMover.Move(movementInput);
     }
 }
