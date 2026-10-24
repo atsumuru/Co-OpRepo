@@ -537,6 +537,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   ShowTopMostFoldoutHeaderGroup: 1
   m_multiplayerUI: {fileID: 306963177}
+  m_playerPrefab: {fileID: 0}
 --- !u!4 &186555408
 Transform:
   m_ObjectHideFlags: 0
@@ -1553,6 +1554,22 @@ PrefabInstance:
     - target: {fileID: 6905733303805191724, guid: 06db3c10e220542b99c4cfdc494bee32, type: 3}
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
       value: 971452908
+      objectReference: {fileID: 0}
+    - target: {fileID: 7903622149186462321, guid: 06db3c10e220542b99c4cfdc494bee32, type: 3}
+      propertyPath: m_InScenePlaced
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7903622149186462321, guid: 06db3c10e220542b99c4cfdc494bee32, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 172536874
+      objectReference: {fileID: 0}
+    - target: {fileID: 7903622149186462321, guid: 06db3c10e220542b99c4cfdc494bee32, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7903622149186462321, guid: 06db3c10e220542b99c4cfdc494bee32, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3469301900
       objectReference: {fileID: 0}
     - target: {fileID: 8339971327646784855, guid: 06db3c10e220542b99c4cfdc494bee32, type: 3}
       propertyPath: m_Name
@@ -2869,6 +2886,22 @@ PrefabInstance:
     - target: {fileID: 1622723216753863577, guid: 73dbe4cc9c782f74db20a3ec1e60a2f5, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 3327085608
+      objectReference: {fileID: 0}
+    - target: {fileID: 2855996297360916595, guid: 73dbe4cc9c782f74db20a3ec1e60a2f5, type: 3}
+      propertyPath: m_InScenePlaced
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2855996297360916595, guid: 73dbe4cc9c782f74db20a3ec1e60a2f5, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2930619472
+      objectReference: {fileID: 0}
+    - target: {fileID: 2855996297360916595, guid: 73dbe4cc9c782f74db20a3ec1e60a2f5, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2855996297360916595, guid: 73dbe4cc9c782f74db20a3ec1e60a2f5, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1672274296
       objectReference: {fileID: 0}
     - target: {fileID: 3588802615709706675, guid: 73dbe4cc9c782f74db20a3ec1e60a2f5, type: 3}
       propertyPath: m_Name

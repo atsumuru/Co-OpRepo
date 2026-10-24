@@ -1,3 +1,4 @@
+using System;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -151,6 +152,26 @@ public class PlayerController : NetworkBehaviour
         if(m_interactionDetector.ClosestInteractable is PickableBase)
         {
             RequestPickUpServerRpc(m_interactionDetector.ClosestInteractable.NetworkObject.NetworkObjectId);
+        }
+        if(m_interactionDetector.ClosestInteractable is ResourcePallet)
+        {
+            RequestGiveItemServerRpc(m_interactionDetector.ClosestInteractable.NetworkObject.NetworkObjectId);
+        }
+    }
+
+    [Rpc(SendTo.Server)]
+    private void RequestGiveItemServerRpc(ulong networkObjectId)
+    {
+        if (!NetworkManager.SpawnManager.SpawnedObjects.TryGetValue(networkObjectId, out NetworkObject target))
+            return;
+
+        if (!target.TryGetComponent(out ResourcePallet resourcePallet))
+            return;
+
+        if (resourcePallet.Interact(m_heldObjectType.Value))
+        {
+            m_heldObjectType.Value = ObjectType.None;
+            m_heldNetworkObjectId.Value = ulong.MaxValue;
         }
     }
 
