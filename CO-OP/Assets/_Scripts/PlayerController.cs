@@ -19,7 +19,7 @@ public class PlayerController : NetworkBehaviour
     private bool m_isInteracting, m_isChopping;
 
     [SerializeField]
-    private GameObject m_axeModel, m_pickAxeModel, m_woodModel, m_stoneModel;
+    private GameObject m_axeModel, m_pickAxeModel, m_woodModel, m_stoneModel, m_starModel;
 
     private ResourceSpawner m_resourceSpawner;
 
@@ -120,26 +120,28 @@ public class PlayerController : NetworkBehaviour
         m_pickAxeModel.SetActive(newValue == ObjectType.PickAxe);
         m_woodModel.SetActive(newValue == ObjectType.Wood);
         m_stoneModel.SetActive(newValue == ObjectType.Stone);
+        m_starModel.SetActive(newValue == ObjectType.Star);
     }
 
     public override void OnNetworkDespawn()
     {
         m_heldObjectType.OnValueChanged -= HandleHeldItemChanged;
+
         if (IsOwner)
         {
-            RequestDropServerRpc();
             m_animationEvents.OnInteract -= HandleInteractAction;
             m_animationEvents.OnAnimationDone -= HandleAnimationDone;
             m_animationEvents.OnChop -= HandleChopAction;
         }
+
         base.OnNetworkDespawn();
     }
 
-    [Rpc(SendTo.Server)]
-    private void RequestDropServerRpc()
-    {
-        DropCurrentItem();
-    }
+    // [Rpc(SendTo.Server)]
+    // private void RequestDropServerRpc()
+    // {
+    //     DropCurrentItem();
+    // }
 
     private void HandleAnimationDone()
     {
@@ -149,13 +151,19 @@ public class PlayerController : NetworkBehaviour
 
     private void HandleInteractAction()
     {
-        if(m_interactionDetector.ClosestInteractable is PickableBase)
+        if (m_interactionDetector.ClosestInteractable is PickableBase)
         {
             RequestPickUpServerRpc(m_interactionDetector.ClosestInteractable.NetworkObject.NetworkObjectId);
         }
-        if(m_interactionDetector.ClosestInteractable is ResourcePallet)
+
+        if (m_interactionDetector.ClosestInteractable is ResourcePallet)
         {
             RequestGiveItemServerRpc(m_interactionDetector.ClosestInteractable.NetworkObject.NetworkObjectId);
+        }
+
+        if (m_interactionDetector.ClosestInteractable is ResourceDropZone)
+        {
+            RequestDepositStarServerRpc(m_interactionDetector.ClosestInteractable.NetworkObject.NetworkObjectId);
         }
     }
 
@@ -201,6 +209,26 @@ public class PlayerController : NetworkBehaviour
 
         m_heldObjectType.Value = pickableItem.ObjectType;
         pickableItem.PickUp();
+    }
+
+    [Rpc(SendTo.Server)]
+    private void RequestDepositStarServerRpc(ulong networkObjectId)
+    {
+        if (m_heldObjectType.Value != ObjectType.Star)
+            return;
+
+        if (!NetworkManager.SpawnManager.SpawnedObjects.TryGetValue(
+            networkObjectId, out NetworkObject target))
+            return;
+
+        if (!target.TryGetComponent(out ResourceDropZone dropZone))
+            return;
+
+        if (dropZone.Interact(m_heldObjectType.Value))
+        {
+            m_heldObjectType.Value = ObjectType.None;
+            m_heldNetworkObjectId.Value = ulong.MaxValue;
+        }
     }
 
     private void DropCurrentItem()

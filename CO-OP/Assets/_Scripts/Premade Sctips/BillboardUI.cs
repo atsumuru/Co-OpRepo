@@ -9,14 +9,39 @@ public class BillboardUI : MonoBehaviour
 
     private void Awake()
     {
-        m_cameraTransform = Camera.main.transform;
+        FindCamera();
+    }
+
+    private void FindCamera()
+    {
+        Camera mainCamera = Camera.main;
+
+        if (mainCamera != null)
+        {
+            m_cameraTransform = mainCamera.transform;
+        }
+        else
+        {
+            m_cameraTransform = null;
+        }
     }
 
     private void LateUpdate()
     {
+        // Find the camera again if the old one was destroyed.
+        if (m_cameraTransform == null)
+        {
+            FindCamera();
+            if (m_cameraTransform == null)
+                return;
+        }
+
         Vector3 direction = transform.position - m_cameraTransform.position;
-        direction.y = 0; // Keep the billboard upright
-        if(direction.sqrMagnitude > 0.001f)
+
+        // Keep the billboard upright.
+        direction.y = 0;
+
+        if (direction.sqrMagnitude > 0.001f)
         {
             transform.rotation = Quaternion.LookRotation(direction);
         }

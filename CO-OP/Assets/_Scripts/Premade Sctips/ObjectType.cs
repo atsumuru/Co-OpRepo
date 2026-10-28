@@ -4,5 +4,6 @@ public enum ObjectType
     Axe,
     PickAxe,
     Wood,
-    Stone
+    Stone,
+    Star
 }
