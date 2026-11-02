@@ -32,7 +32,7 @@ public class LoginManager : MonoBehaviour
 
     public async void StartAnonymousSignIn()
     {
-        await SignINAnonymouslyAsync();
+        await SignInAnonymouslyAsync();
     }
 
     private async Task SignInAnonymouslyAsync()
