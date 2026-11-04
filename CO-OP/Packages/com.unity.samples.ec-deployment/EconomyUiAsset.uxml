@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:Button text="Display currency details" name="ButtonDetails" />
+        <ui:Button text="Increase balance" name="ButtonIncrease" />
+        <ui:Button text="Reset balance" name="ButtonReset" />
+    </ui:VisualElement>
+</ui:UXML>

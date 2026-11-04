@@ -1,0 +1,34 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="RemoteConfigUiStyle.uss" />
+    <ui:VisualElement name="RootContainer" class="root-container">
+        <ui:VisualElement name="RowContainerTitle" class="row-container">
+            <ui:Label text="RC Keys" name="TitleTypes" class="row-item section-title" />
+            <ui:Label text="RC Values" name="TitleValues" class="section-title row-item" />
+        </ui:VisualElement>
+        <ui:VisualElement name="RowString" class="row-container">
+            <ui:Label text="String" name="StringLabel" class="row-item" />
+            <ui:Label name="StringValue" class="row-item" />
+        </ui:VisualElement>
+        <ui:VisualElement name="RowInt" class="row-container">
+            <ui:Label text="Int" name="IntLabel" class="row-item" />
+            <ui:Label name="IntValue" class="row-item" />
+        </ui:VisualElement>
+        <ui:VisualElement name="RowBool" class="row-container">
+            <ui:Label text="Bool" name="BoolLabel" class="row-item" />
+            <ui:Label name="BoolValue" class="row-item" />
+        </ui:VisualElement>
+        <ui:VisualElement name="RowLong" class="row-container">
+            <ui:Label text="Long" name="LongLabel" class="row-item" />
+            <ui:Label name="LongValue" class="row-item" />
+        </ui:VisualElement>
+        <ui:VisualElement name="RowFloat" class="row-container">
+            <ui:Label text="Float" name="FloatLabel" class="row-item" />
+            <ui:Label name="FloatValue" class="row-item" />
+        </ui:VisualElement>
+        <ui:VisualElement name="RowJson" class="row-container">
+            <ui:Label text="JSON" name="JsonLabel" class="row-item" />
+            <ui:Label name="JsonValue" class="row-item" />
+        </ui:VisualElement>
+        <ui:Button text="Get Config" name="ButtonGetConfig" />
+    </ui:VisualElement>
+</ui:UXML>

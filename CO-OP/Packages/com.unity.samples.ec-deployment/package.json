@@ -1,0 +1,13 @@
+{
+  "name": "com.unity.samples.ec-deployment",
+  "displayName": "Deployment Sample - Economy Deployment",
+  "version": "1.0.0",
+  "unity": "2021.3",
+  "description": "This is a simple sample to deploy an Economy configuration and call the service.",
+  "dependencies": {
+    "com.unity.services.authentication": "3.5.2",
+    "com.unity.services.core": "1.15.1",
+    "com.unity.services.deployment": "1.6.2",
+    "com.unity.services.economy": "3.5.3"
+  }
+}

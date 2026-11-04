@@ -1,0 +1,25 @@
+.root-container {
+    background-color: grey;
+    border-radius: 16px;
+    margin: 8px;
+}
+
+.row-container {
+    flex-direction: row;
+    flex-grow: 0;
+}
+
+.section-title {
+    -unity-text-align: middle-center;
+    border-bottom-width: 2px;
+    border-bottom-color: dimgrey;
+}
+
+.row-item {
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+.unity-button {
+    border-radius: 16px;
+}
