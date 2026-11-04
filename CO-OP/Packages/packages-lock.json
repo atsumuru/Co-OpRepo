@@ -152,6 +152,28 @@
         "com.unity.render-pipelines.core": "17.6.0"
       }
     },
+    "com.unity.samples.ccm-deployment": {
+      "version": "file:com.unity.samples.ccm-deployment",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.services.authentication": "3.5.2",
+        "com.unity.services.core": "1.15.1",
+        "com.unity.services.deployment": "1.6.2",
+        "com.unity.services.cloudcode": "2.10.2"
+      }
+    },
+    "com.unity.samples.ccs-deployment": {
+      "version": "file:com.unity.samples.ccs-deployment",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.services.authentication": "3.5.2",
+        "com.unity.services.core": "1.15.1",
+        "com.unity.services.deployment": "1.6.2",
+        "com.unity.services.cloudcode": "2.10.2"
+      }
+    },
     "com.unity.searcher": {
       "version": "4.9.5",
       "depth": 2,
@@ -168,6 +190,19 @@
         "com.unity.services.core": "1.18.0",
         "com.unity.nuget.newtonsoft-json": "3.2.2",
         "com.unity.modules.unitywebrequest": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.services.cloudcode": {
+      "version": "2.10.4",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.services.core": "1.15.1",
+        "com.unity.services.wire": "1.2.3",
+        "com.unity.nuget.newtonsoft-json": "3.0.2",
+        "com.unity.modules.unitywebrequest": "1.0.0",
+        "com.unity.services.authentication": "3.5.1"
       },
       "url": "https://packages.unity.com"
     },
